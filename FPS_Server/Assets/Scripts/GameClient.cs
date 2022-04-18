@@ -157,7 +157,7 @@ public class GameClient
             {
                 frame++;
                 var cmd = new FrameStart();
-                cmd.logFrame = frame;
+                cmd.frame = frame;
                 SendAllMessage(cmd.Obj2Str());
             }
             foreach (string msg in cacheMsgs)

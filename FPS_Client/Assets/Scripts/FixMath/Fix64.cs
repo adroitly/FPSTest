@@ -1088,5 +1088,13 @@ namespace FixMath
         {
             m_rawValue = value * ONE;
         }
+
+        public Fix64(string data)
+        {
+            if (!long.TryParse(data, out m_rawValue))
+            {
+                m_rawValue = ONE;
+            }
+        }
     }
 }

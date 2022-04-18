@@ -49,5 +49,6 @@ public abstract class CommandBase
     public virtual string Obj2Str()
     {
         return JsonUtility.ToJson(this);
+        //return TinyJson.JSONWriter.ToJson(this);
     }
 }

@@ -15,7 +15,7 @@ public class TransformData
     public TransformData(GameObject go)
     {
         gameObject = go;
-        speed = 1.ToFix();
+        speed = 2.ToFix();
     }
     public void SetPosition(Vec3 vec3)
     {
@@ -46,7 +46,7 @@ class MoveTo : UpdateActionBase
             return;
         }
         var forward = (targetPosition - transformData.position).normalized;
-        var pos = transformData.position + forward * transformData.speed;
+        var pos = transformData.position + forward * transformData.speed * TimeMgr.fixTime;
         transformData.SetPosition(pos);
     }
 }

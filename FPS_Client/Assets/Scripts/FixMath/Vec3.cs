@@ -22,6 +22,10 @@ public struct Vec3
         get
         {
             Fix64 len = Fix64.Sqrt(x * x + y * y + z * z);
+            if (len == Fix64.Zero)
+            {
+                return Vec3.one;
+            }
             return new Vec3(x / len, y / len, z / len);
         }
     }
@@ -87,6 +91,45 @@ public struct Vec3
         get
         {
             return new Vector3(x, y, z);
+        }
+    }
+
+    public static Vec3 up
+    {
+        get
+        {
+            return new Vec3(0, 1, 0);
+        }
+    }
+
+    public static Vec3 down
+    {
+        get
+        {
+            return new Vec3(0, -1, 0);
+        }
+    }
+
+    public static Vec3 left
+    {
+        get
+        {
+            return new Vec3(-1, 0, 0);
+        }
+    }
+
+    public static Vec3 one 
+    {
+        get
+        {
+            return new Vec3(1, 1, 1);
+        }
+    }
+    public static Vec3 right
+    {
+        get
+        {
+            return new Vec3(1, 0, 0);
         }
     }
 }

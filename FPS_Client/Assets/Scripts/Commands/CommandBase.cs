@@ -37,11 +37,13 @@ public abstract class CommandBase
     public static CommandBase Str2Obj<T>(string json) where T : CommandBase
     {
         return JsonUtility.FromJson<T>(json);
+        //return TinyJson.JSONParser.FromJson<T>(json);
     }
 
     public virtual string Obj2Str()
     {
         return JsonUtility.ToJson(this);
+        //return TinyJson.JSONWriter.ToJson(this);
     }
 
     public FPSObject GetFPSObject()

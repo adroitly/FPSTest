@@ -102,11 +102,12 @@ public class FPSMain
             }
         }
         frame++;
+        Debug.Log(frame);
     }
     
-    public void SendCommand(CommandBase commandBase)
+    public static void SendCommand(CommandBase commandBase)
     {
-        commandBase.SetUserId(userId);
+        commandBase.SetUserId(FPSMain.Instance.userId);
         GameManager.TcpClient.SocketSend(commandBase.Obj2Str());
     }
 }

@@ -27,6 +27,7 @@ public static class CommandUtil
     }
     public static CommandBase GetCommand(string data)
     {
+        Debugger.LogFrame(data);
         TempCommand obj = JsonUtility.FromJson<TempCommand>(data);
         int cmdId = obj.GetCmdId();
         Command2Id command2Id = (Command2Id)cmdId;

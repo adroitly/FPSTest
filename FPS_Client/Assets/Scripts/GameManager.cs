@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         FPSMain.Instance.InitFPS();
         TcpClient = new TcpClient();
         TcpClient.InitSocket(ipStr, port);
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
     }
 
     private void OnApplicationQuit()

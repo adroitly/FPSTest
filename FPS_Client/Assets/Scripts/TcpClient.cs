@@ -11,7 +11,7 @@ public class TcpClient
 {
     private void Log(string mgs)
     {
-        
+        //Debugger.Log(mgs);
     }
     Socket serverSocket; //服务器端socket
     IPAddress ip; //主机ip

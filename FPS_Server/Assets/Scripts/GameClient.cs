@@ -36,13 +36,13 @@ public class GameClient
             ipList.Add(_clientIP);
             data = new byte[_client.ReceiveBufferSize];
             client.GetStream().BeginRead(data, 0, Convert.ToInt32(_client.ReceiveBufferSize), RceiveMessage, null);
-            Loom.LogOnMainThread("µÇÂ¼³É¹¦");
+            Loom.LogOnMainThread("ç™»å½•æˆåŠŸ");
             InitUserId();
             SendAllCacheMsgs();
         }
         else
         {
-            //sendMessage("Á¬½ÓÊıÁ¿Îª×î´ó£¬Á¬½ÓÊ§°Ü");
+            //sendMessage("è¿æ¥æ•°é‡ä¸ºæœ€å¤§ï¼Œè¿æ¥å¤±è´¥");
         }
     }
 
@@ -64,7 +64,7 @@ public class GameClient
         SendMessage(cmd.Obj2Str());
         var temp = new CreateUserCmd();
         temp.SetUserId(uid);
-        cacheMsgs.Add(temp.Obj2Str());
+        AddCacheMessage(temp.Obj2Str());
     }
 
     public void RceiveMessage(IAsyncResult ar)
@@ -80,7 +80,7 @@ public class GameClient
             {
                 //allClient.Remove(_clientIP);
                 allClient[uid] = null;
-                Loom.LogOnMainThread("·şÎñÆ÷´íÎó");
+                Loom.LogOnMainThread("æœåŠ¡å™¨é”™è¯¯");
                 clientCount--;
                 UserOut();
                 return;
@@ -88,7 +88,7 @@ public class GameClient
             else
             {
                 string messageReceived = Encoding.UTF8.GetString(data, 0, bytesread);
-                Loom.LogOnMainThread("uid = " + uid + " Server Received" + messageReceived);
+                //Loom.LogOnMainThread("uid = " + uid + " Server Received" + messageReceived);
                 lock (cacheMsgs)
                 {
                     cacheMsgs.Add(messageReceived);
@@ -110,7 +110,7 @@ public class GameClient
             allClient[uid] = null;
             clientCount--;
             UserOut();
-            Loom.LogOnMainThread(_clientNick + " leave");
+            //Loom.LogOnMainThread(_clientNick + " leave");
         }
     }
 
@@ -147,6 +147,7 @@ public class GameClient
         {
             cacheMsgs.Clear();
             allMsgs.Clear();
+            return;
         }
         curDt += Time.deltaTime;
         float perTime = 1.0f / perFrame;
@@ -183,11 +184,11 @@ public class GameClient
         }
         byte[] sendData = Encoding.UTF8.GetBytes(message);
 
-        //Òì²½·¢ËÍÏûÏ¢ÇëÇó
+        //å¼‚æ­¥å‘é€æ¶ˆæ¯è¯·æ±‚
         _client.Client.BeginSend(sendData, 0, sendData.Length, SocketFlags.None, new System.AsyncCallback(SendToServer), _client.Client);
 
     }
-    //·¢ËÍÏûÏ¢½áÊøµÄ»Øµ÷º¯Êı
+    //å‘é€æ¶ˆæ¯ç»“æŸçš„å›è°ƒå‡½æ•°
     void SendToServer(System.IAsyncResult ar)
     {
         Socket worker = ar.AsyncState as Socket;

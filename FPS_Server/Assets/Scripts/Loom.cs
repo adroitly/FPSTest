@@ -7,17 +7,17 @@ using System.Linq;
 
 public class Loom : MonoBehaviour
 {
-	public static int maxThreads = 8;//×î´óÏß³ÌÊıÁ¿
+	public static int maxThreads = 8;//æœ€å¤§çº¿ç¨‹æ•°é‡
 	static int numThreads;
 
 	private static Loom _current;
 	private int _count;
-	//»ñÈ¡Loom
+	//è·å–Loom
 	public static Loom Current
 	{
 		get
 		{
-			//³õÊ¼»¯ ·µ»Ø_current£¨loom£©
+			//åˆå§‹åŒ– è¿”å›_currentï¼ˆloomï¼‰
 			Initialize();
 			return _current;
 		}
@@ -25,20 +25,20 @@ public class Loom : MonoBehaviour
 
 	void Awake()
 	{
-		//³õÊ¼»¯£¨ÒÑÍÏ×§½Å±¾£©
+		//åˆå§‹åŒ–ï¼ˆå·²æ‹–æ‹½è„šæœ¬ï¼‰
 		_current = this;
 		initialized = true;
 	}
 
-	static bool initialized;//true ÒÑ³õÊ¼»¯
+	static bool initialized;//true å·²åˆå§‹åŒ–
 
-	//ÔÚ³ÌĞòÔËĞĞÊ±£¬´´½¨Ò»¸öµ¥ÀıµÄloom×é¼ş£¨·ÀÖ¹Íü¼ÇÍÏ×§½Å±¾£©
+	//åœ¨ç¨‹åºè¿è¡Œæ—¶ï¼Œåˆ›å»ºä¸€ä¸ªå•ä¾‹çš„loomç»„ä»¶ï¼ˆé˜²æ­¢å¿˜è®°æ‹–æ‹½è„šæœ¬ï¼‰
 	static void Initialize()
 	{
-		//µ¥Àı
+		//å•ä¾‹
 		if (!initialized)
 		{
-			//³ÌĞòÔËĞĞÊ±Ö´ĞĞ£¬´´½¨Ò»¸öLoom×é¼ş
+			//ç¨‹åºè¿è¡Œæ—¶æ‰§è¡Œï¼Œåˆ›å»ºä¸€ä¸ªLoomç»„ä»¶
 			if (Application.isPlaying)
 			{
 				initialized = true;
@@ -48,19 +48,19 @@ public class Loom : MonoBehaviour
 		}
 	}
 
-	private List<Action> _actions = new List<Action>();//ĞĞÎªÁĞ±í
-													   //ÑÓÊ±ÅÅ¶Ó
+	private List<Action> _actions = new List<Action>();//è¡Œä¸ºåˆ—è¡¨
+													   //å»¶æ—¶æ’é˜Ÿ
 	public struct DelayedQueueItem
 	{
-		public float time;//ÑÓÊ±
-		public Action action;//ĞĞÎª
+		public float time;//å»¶æ—¶
+		public Action action;//è¡Œä¸º
 	}
-	private List<DelayedQueueItem> _delayed = new List<DelayedQueueItem>();//ÑÓÊ±ĞĞÎªÁĞ±í
+	private List<DelayedQueueItem> _delayed = new List<DelayedQueueItem>();//å»¶æ—¶è¡Œä¸ºåˆ—è¡¨
 
 	List<DelayedQueueItem> _currentDelayed = new List<DelayedQueueItem>();
 
 
-	#region ÔÚÖ÷Ïß³Ìµ÷ÓÃ·½·¨
+	#region åœ¨ä¸»çº¿ç¨‹è°ƒç”¨æ–¹æ³•
 	public static void QueueOnMainThread(Action action)
 	{
 		QueueOnMainThread(action, 0f);
@@ -72,10 +72,10 @@ public class Loom : MonoBehaviour
 	}
 	public static void QueueOnMainThread(Action action, float time)
 	{
-		//µ±Ç°Ê±¼ä²»Îª0 Ğ´ÈëÑÓÊ±ÁĞ±íÖĞ
+		//å½“å‰æ—¶é—´ä¸ä¸º0 å†™å…¥å»¶æ—¶åˆ—è¡¨ä¸­
 		if (time != 0)
 		{
-			//·ÀÖ¹ËøËÀ£¨·ÀÖ¹_delayed¼¯ºÏÔÚĞ´ÈëµÄÊ±ºò£¬ÆäËû½ø³Ì½øĞĞÆäËû²Ù×÷µ¼ÖÂ´íÎó£©
+			//é˜²æ­¢é”æ­»ï¼ˆé˜²æ­¢_delayedé›†åˆåœ¨å†™å…¥çš„æ—¶å€™ï¼Œå…¶ä»–è¿›ç¨‹è¿›è¡Œå…¶ä»–æ“ä½œå¯¼è‡´é”™è¯¯ï¼‰
 			lock (Current._delayed)
 			{
 				Current._delayed.Add(new DelayedQueueItem { time = Time.time + time, action = action });
@@ -83,7 +83,7 @@ public class Loom : MonoBehaviour
 		}
 		else
 		{
-			//²»Îª0 Ğ´ÈëĞĞÎªÁĞ±íÖĞ
+			//ä¸ä¸º0 å†™å…¥è¡Œä¸ºåˆ—è¡¨ä¸­
 			lock (Current._actions)
 			{
 				Current._actions.Add(action);
@@ -93,7 +93,7 @@ public class Loom : MonoBehaviour
 
 	#endregion
 
-	#region ÔÚÏß³Ìµ÷ÓÃµÄ·½·¨
+	#region åœ¨çº¿ç¨‹è°ƒç”¨çš„æ–¹æ³•
 	public static Thread RunAsync(Action a)
 	{
 		Initialize();
@@ -126,7 +126,7 @@ public class Loom : MonoBehaviour
 
 	void OnDisable()
 	{
-		//µ±Ç°loomÇå¿Õ
+		//å½“å‰loomæ¸…ç©º
 		if (_current == this)
 		{
 			_current = null;
@@ -141,21 +141,21 @@ public class Loom : MonoBehaviour
 
 	}
 
-	List<Action> _currentActions = new List<Action>();//µ±Ç°ĞĞÎªÁĞ±í
+	List<Action> _currentActions = new List<Action>();//å½“å‰è¡Œä¸ºåˆ—è¡¨
 
 	// Update is called once per frame
 	void Update()
 	{
-		//ĞĞÎªÁĞ±í ·ÀËøËÀ
+		//è¡Œä¸ºåˆ—è¡¨ é˜²é”æ­»
 		lock (_actions)
 		{
-			_currentActions.Clear();//µ±Ç°ĞĞÎªÁĞ±í Çå¿Õ
-			_currentActions.AddRange(_actions);//½«_actionsÁĞ±íÈ«²¿Ìí¼Óµ½_currentActionsÁĞ±íÖĞ
-			_actions.Clear();//_actionsÁĞ±íÇå¿Õ
+			_currentActions.Clear();//å½“å‰è¡Œä¸ºåˆ—è¡¨ æ¸…ç©º
+			_currentActions.AddRange(_actions);//å°†_actionsåˆ—è¡¨å…¨éƒ¨æ·»åŠ åˆ°_currentActionsåˆ—è¡¨ä¸­
+			_actions.Clear();//_actionsåˆ—è¡¨æ¸…ç©º
 		}
 		foreach (var a in _currentActions)
 		{
-			a();//Ñ­»·Ö´ĞĞ a ĞĞÎª
+			a();//å¾ªç¯æ‰§è¡Œ a è¡Œä¸º
 		}
 		lock (_delayed)
 		{

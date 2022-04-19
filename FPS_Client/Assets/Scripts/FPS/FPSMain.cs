@@ -6,7 +6,7 @@ using UnityEngine;
 public class FPSMain
 {
     public static FPSMain Instance { get; } = new FPSMain();
-    public static int frameMaxCount = -1;
+    public static int frameMaxCount = 4;
     public int frame { get; private set; }
     List<string> reciveDatas = new List<string>();
 
@@ -102,7 +102,6 @@ public class FPSMain
             }
         }
         frame++;
-        Debug.Log(frame);
     }
     
     public static void SendCommand(CommandBase commandBase)

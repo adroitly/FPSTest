@@ -33,16 +33,16 @@ public class TcpServer : MonoBehaviour
     }
     private void StartServer()
     {
-        //const int bufferSize = 8792;//»º´æ´óĞ¡,8192×Ö½Ú  
+        //const int bufferSize = 8792;//ç¼“å­˜å¤§å°,8192å­—èŠ‚  
 
         IPAddress ip = IPAddress.Parse(ipStr);
 
         tcpListener = new TcpListener(ip, port);
         tcpListener.Start();
 
-        //Ö´ĞĞunityÖ÷Ïß³Ì·½·¨£¬GetComponentĞèÒªÔÚÖ÷Ïß³ÌÔËĞĞ
-        //Debug.Log("Socket·şÎñÆ÷¼àÌıÆô¶¯......");
-        Loom.LogOnMainThread("  ·şÎñÆ÷" + ip.ToString() + "¼àÌıÆô¶¯......     " + DateTime.Now + "\n");
+        //æ‰§è¡Œunityä¸»çº¿ç¨‹æ–¹æ³•ï¼ŒGetComponentéœ€è¦åœ¨ä¸»çº¿ç¨‹è¿è¡Œ
+        //Debug.Log("SocketæœåŠ¡å™¨ç›‘å¬å¯åŠ¨......");
+        Loom.LogOnMainThread("  æœåŠ¡å™¨" + ip.ToString() + "ç›‘å¬å¯åŠ¨......     " + DateTime.Now + "\n");
 
         do
         {
@@ -50,7 +50,7 @@ public class TcpServer : MonoBehaviour
             if (tcpClient != null && tcpClient.Connected)
             {
                 var client = new GameClient(tcpClient);
-                Loom.LogOnMainThread(client._clientIP + "   ¿Í»§¶ËÁ¬½Ó     " + DateTime.Now + "\n");
+                //Loom.LogOnMainThread(client._clientIP + "   å®¢æˆ·ç«¯è¿æ¥     " + DateTime.Now + "\n");
                 //client.SendUid();
             }
         }
